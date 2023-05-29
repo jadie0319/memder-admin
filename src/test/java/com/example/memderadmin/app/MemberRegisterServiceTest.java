@@ -13,28 +13,28 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 
-class MemberRegistServiceTest {
+class MemberRegisterServiceTest {
 
     private final MemberRepository memberRepository = new FakeMemberRepository();
-    private final MemberRegistService memberRegistService = new MemberRegistService(memberRepository);
+    private final MemberRegisterService memberRegisterService = new MemberRegisterService(memberRepository);
 
     @DisplayName("패스워드 정책에 맞지 않으면 예외를 반환한다.")
     @Test
     void invalid() {
-        MemberRegistRequest request = MemberRegistRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
+        MemberRegisterRequest request = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
                 "Jadie", "qwer1234", "jadie@gmail.com", "홍어", "모임참여자 입니다.");
 
         assertThatExceptionOfType(InvalidPasswordException.class)
-                .isThrownBy(() -> memberRegistService.regist(request));
+                .isThrownBy(() -> memberRegisterService.regist(request));
     }
 
     @DisplayName("모임 참여자 등록")
     @Test
     void successParticipant() {
-        MemberRegistRequest request = MemberRegistRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
+        MemberRegisterRequest request = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
                 "Jadie", "qwer1234!", "jadie@gmail.com", "홍어", "모임참여자 입니다.");
 
-        MemberRegistResponse response = memberRegistService.regist(request);
+        MemberRegisterResponse response = memberRegisterService.regist(request);
 
         assertThat(response.name()).isEqualTo(request.name());
         assertThat(response.role()).isEqualTo(Role.PARTICIPANT);
@@ -44,10 +44,10 @@ class MemberRegistServiceTest {
     @DisplayName("모임 주최자 등록")
     @Test
     void successHost() {
-        MemberRegistRequest request = MemberRegistRequest.host("제이슨", LocalDate.of(2023, 5, 29),
+        MemberRegisterRequest request = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
                 "M", "Dudu", "qwer1234!@#","dudu@gmail.com", "spring");
 
-        MemberRegistResponse response = memberRegistService.regist(request);
+        MemberRegisterResponse response = memberRegisterService.regist(request);
 
         assertThat(response.name()).isEqualTo(request.name());
         assertThat(response.role()).isEqualTo(Role.HOST);

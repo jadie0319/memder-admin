@@ -1,7 +1,7 @@
 package com.example.memderadmin.api;
 
-import com.example.memderadmin.app.MemberRegistRequest;
-import com.example.memderadmin.app.MemberRegistResponse;
+import com.example.memderadmin.app.MemberRegisterRequest;
+import com.example.memderadmin.app.MemberRegisterResponse;
 import com.example.memderadmin.domain.Role;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -16,12 +16,12 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class MemberRegistApiTest extends BaseController {
+class MemberRegisterApiTest extends BaseController {
 
     @DisplayName("모임 주최자 등록")
     @Test
     void host() {
-        MemberRegistRequest host = MemberRegistRequest.host("제이슨", LocalDate.of(2023, 5, 29),
+        MemberRegisterRequest host = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
                 "M", "Dudu", "qwer1234!@#","dudu@gmail.com", "spring");
 
         ExtractableResponse<Response> response =
@@ -41,7 +41,7 @@ class MemberRegistApiTest extends BaseController {
                         .extract();
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        MemberRegistResponse result = response.body().as(MemberRegistResponse.class);
+        MemberRegisterResponse result = response.body().as(MemberRegisterResponse.class);
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.name()).isEqualTo("제이슨");
         assertThat(result.role()).isEqualTo(Role.HOST);
@@ -52,7 +52,7 @@ class MemberRegistApiTest extends BaseController {
     @DisplayName("모임 참여자 등록")
     @Test
     void participant() {
-        MemberRegistRequest participant = MemberRegistRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
+        MemberRegisterRequest participant = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
                 "Jadie", "qwer1234!@#", "jadie@gmail.com","홍어", "모임참여자 입니다.");
 
         ExtractableResponse<Response> response =
@@ -72,7 +72,7 @@ class MemberRegistApiTest extends BaseController {
                         .extract();
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-        MemberRegistResponse result = response.body().as(MemberRegistResponse.class);
+        MemberRegisterResponse result = response.body().as(MemberRegisterResponse.class);
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.name()).isEqualTo("제이디");
         assertThat(result.role()).isEqualTo(Role.PARTICIPANT);
@@ -83,7 +83,7 @@ class MemberRegistApiTest extends BaseController {
     @DisplayName("모임 참여자 등록실패 - 비밀번호 정책 부합")
     @Test
     void invalidPassword() {
-        MemberRegistRequest participant = MemberRegistRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
+        MemberRegisterRequest participant = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
                 "Jadie", "qwer1234", "jadie@gmail.com","홍어", "모임참여자 입니다.");
 
         ExtractableResponse<Response> response =

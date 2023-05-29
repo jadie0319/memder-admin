@@ -11,19 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class MemberRegistService {
+public class MemberRegisterService {
 
     private final MemberRepository memberRepository;
 
-    public MemberRegistService(MemberRepository memberRepository) {
+    public MemberRegisterService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
     @Transactional
-    public MemberRegistResponse regist(MemberRegistRequest request) {
+    public MemberRegisterResponse regist(MemberRegisterRequest request) {
         validate(request);
         Member savedMember = memberRepository.save(Member.of(request));
-        return MemberRegistResponse.builder()
+        return MemberRegisterResponse.builder()
                 .id(savedMember.getId())
                 .name(savedMember.getName())
                 .role(savedMember.getRole())
@@ -32,7 +32,7 @@ public class MemberRegistService {
                 .build();
     }
 
-    private void validate(MemberRegistRequest request) {
+    private void validate(MemberRegisterRequest request) {
         if (!PasswordValidator.validate(request.password())) {
             throw new InvalidPasswordException(ExceptionMessages.INVALID_PASSWORD);
         }

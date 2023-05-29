@@ -5,7 +5,7 @@ import lombok.Builder;
 
 import java.time.LocalDateTime;
 
-public record MemberRegistResponse(
+public record MemberRegisterResponse(
         Long id,
         String name,
         Role role,
@@ -14,5 +14,5 @@ public record MemberRegistResponse(
 ) {
 
     @Builder
-    public MemberRegistResponse {}
+    public MemberRegisterResponse {}
 }

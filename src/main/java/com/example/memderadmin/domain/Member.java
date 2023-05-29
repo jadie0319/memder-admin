@@ -1,12 +1,11 @@
 package com.example.memderadmin.domain;
 
-import com.example.memderadmin.app.MemberRegistRequest;
+import com.example.memderadmin.app.MemberRegisterRequest;
 import com.example.memderadmin.infra.GenderConverter;
 import com.example.memderadmin.infra.RoleConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -39,7 +38,7 @@ public class Member {
     protected Member() {
     }
 
-    public static Member of(MemberRegistRequest request) {
+    public static Member of(MemberRegisterRequest request) {
         if (request.isHost()) {
             return Member.builder()
                     .name(request.name())

@@ -5,7 +5,7 @@ import lombok.Builder;
 
 import java.time.LocalDate;
 
-public record MemberRegistRequest(
+public record MemberRegisterRequest(
         String name,
         Role role,
         LocalDate birthDate,
@@ -19,12 +19,12 @@ public record MemberRegistRequest(
 ) {
 
     @Builder
-    public MemberRegistRequest {}
+    public MemberRegisterRequest {}
 
 
 
-    public static MemberRegistRequest host(String name, LocalDate birthDate, String gender, String id, String password, String email, String group) {
-        return MemberRegistRequest.builder()
+    public static MemberRegisterRequest host(String name, LocalDate birthDate, String gender, String id, String password, String email, String group) {
+        return MemberRegisterRequest.builder()
                 .name(name)
                 .role(Role.HOST)
                 .birthDate(birthDate)
@@ -36,9 +36,9 @@ public record MemberRegistRequest(
                 .build();
     }
 
-    public static MemberRegistRequest participant(String name, LocalDate birthDate, String gender, String id,
-                                                  String password, String email, String limitIngredients, String description) {
-        return MemberRegistRequest.builder()
+    public static MemberRegisterRequest participant(String name, LocalDate birthDate, String gender, String id,
+                                                    String password, String email, String limitIngredients, String description) {
+        return MemberRegisterRequest.builder()
                 .name(name)
                 .role(Role.PARTICIPANT)
                 .birthDate(birthDate)
