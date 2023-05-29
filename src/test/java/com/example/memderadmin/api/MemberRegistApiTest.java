@@ -2,6 +2,7 @@ package com.example.memderadmin.api;
 
 import com.example.memderadmin.app.MemberRegistRequest;
 import com.example.memderadmin.app.MemberRegistResponse;
+import com.example.memderadmin.domain.Role;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -21,7 +22,7 @@ class MemberRegistApiTest extends BaseController {
     @Test
     void host() {
         MemberRegistRequest host = MemberRegistRequest.host("제이슨", LocalDate.of(2023, 5, 29),
-                "M", "Dudu", "qwer1234!@#", "spring");
+                "M", "Dudu", "qwer1234!@#","dudu@gmail.com", "spring");
 
         ExtractableResponse<Response> response =
                 RestAssured
@@ -43,6 +44,8 @@ class MemberRegistApiTest extends BaseController {
         MemberRegistResponse result = response.body().as(MemberRegistResponse.class);
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.name()).isEqualTo("제이슨");
+        assertThat(result.role()).isEqualTo(Role.HOST);
+        assertThat(result.loginId()).isEqualTo("Dudu");
         assertThat(result.regDt()).isNotNull();
     }
 
@@ -50,7 +53,7 @@ class MemberRegistApiTest extends BaseController {
     @Test
     void participant() {
         MemberRegistRequest participant = MemberRegistRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
-                "Jadie", "qwer1234!@#", "홍어", "모임참여자 입니다.");
+                "Jadie", "qwer1234!@#", "jadie@gmail.com","홍어", "모임참여자 입니다.");
 
         ExtractableResponse<Response> response =
                 RestAssured
@@ -72,6 +75,8 @@ class MemberRegistApiTest extends BaseController {
         MemberRegistResponse result = response.body().as(MemberRegistResponse.class);
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.name()).isEqualTo("제이디");
+        assertThat(result.role()).isEqualTo(Role.PARTICIPANT);
+        assertThat(result.loginId()).isEqualTo("Jadie");
         assertThat(result.regDt()).isNotNull();
     }
 
@@ -79,7 +84,7 @@ class MemberRegistApiTest extends BaseController {
     @Test
     void invalidPassword() {
         MemberRegistRequest participant = MemberRegistRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
-                "Jadie", "qwer1234", "홍어", "모임참여자 입니다.");
+                "Jadie", "qwer1234", "jadie@gmail.com","홍어", "모임참여자 입니다.");
 
         ExtractableResponse<Response> response =
                 RestAssured
