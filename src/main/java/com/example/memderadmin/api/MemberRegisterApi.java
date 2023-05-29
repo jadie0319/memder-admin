@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class MemberRegisterApi {
 
@@ -17,7 +19,7 @@ public class MemberRegisterApi {
     }
 
     @PostMapping("/extsvc/admin/homepage/v1/member")
-    public ResponseEntity<?> regist(@RequestBody MemberRegisterRequest request) {
+    public ResponseEntity<?> regist(@RequestBody @Valid MemberRegisterRequest request) {
         return ResponseEntity.ok(memberRegisterService.regist(request));
     }
 }

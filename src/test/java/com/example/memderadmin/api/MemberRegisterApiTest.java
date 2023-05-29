@@ -22,23 +22,9 @@ class MemberRegisterApiTest extends BaseController {
     @Test
     void host() {
         MemberRegisterRequest host = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
-                "M", "Dudu", "qwer1234!@#","dudu@gmail.com", "spring");
+                "M", "Dudu", "qwer1234!@#", "dudu@gmail.com", "spring");
 
-        ExtractableResponse<Response> response =
-                RestAssured
-                        .given()
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(ContentType.JSON)
-                        .body(host)
-                        .log().all()
-
-                        .when()
-                        .post("/extsvc/admin/homepage/v1/member")
-
-                        .then()
-                        .log().all()
-
-                        .extract();
+        ExtractableResponse<Response> response = callMemberRegisterApi(host);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         MemberRegisterResponse result = response.body().as(MemberRegisterResponse.class);
@@ -53,23 +39,9 @@ class MemberRegisterApiTest extends BaseController {
     @Test
     void participant() {
         MemberRegisterRequest participant = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
-                "Jadie", "qwer1234!@#", "jadie@gmail.com","홍어", "모임참여자 입니다.");
+                "Jadie", "qwer1234!@#", "jadie@gmail.com", "홍어", "모임참여자 입니다.");
 
-        ExtractableResponse<Response> response =
-                RestAssured
-                        .given()
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(ContentType.JSON)
-                        .body(participant)
-                        .log().all()
-
-                        .when()
-                        .post("/extsvc/admin/homepage/v1/member")
-
-                        .then()
-                        .log().all()
-
-                        .extract();
+        ExtractableResponse<Response> response = callMemberRegisterApi(participant);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         MemberRegisterResponse result = response.body().as(MemberRegisterResponse.class);
@@ -80,27 +52,43 @@ class MemberRegisterApiTest extends BaseController {
         assertThat(result.regDt()).isNotNull();
     }
 
-    @DisplayName("모임 참여자 등록실패 - 비밀번호 정책 부합")
+    @DisplayName("모임 참여자 등록실패 - 비밀번호 정책 부합하지 않음")
     @Test
     void invalidPassword() {
         MemberRegisterRequest participant = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
-                "Jadie", "qwer1234", "jadie@gmail.com","홍어", "모임참여자 입니다.");
+                "Jadie", "qwer1234", "jadie@gmail.com", "홍어", "모임참여자 입니다.");
 
-        ExtractableResponse<Response> response =
-                RestAssured
-                        .given().log().all()
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .body(participant)
-
-                        .when()
-                        .post("/extsvc/admin/homepage/v1/member")
-
-                        .then().log().all()
-
-                        .extract();
+        ExtractableResponse<Response> response = callMemberRegisterApi(participant);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @DisplayName("모임 참여자 등록실패 - 이메일 규칙 부합하지 않음")
+    @Test
+    void invalidEmail() {
+        MemberRegisterRequest participant = MemberRegisterRequest.participant("제이디", LocalDate.of(2023, 4, 29), "M",
+                "Jadie", "qwer1234!", "jadiegmail.com", "홍어", "모임참여자 입니다.");
+
+        ExtractableResponse<Response> response = callMemberRegisterApi(participant);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    private ExtractableResponse<Response> callMemberRegisterApi(MemberRegisterRequest req) {
+        return RestAssured
+                .given()
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(ContentType.JSON)
+                .body(req)
+                .log().all()
+
+                .when()
+                .post("/extsvc/admin/homepage/v1/member")
+
+                .then()
+                .log().all()
+
+                .extract();
     }
 
 }

@@ -1,8 +1,8 @@
 package com.example.memderadmin.app;
 
 import com.example.memderadmin.common.PasswordValidator;
-import com.example.memderadmin.domain.MemberRepository;
 import com.example.memderadmin.domain.Member;
+import com.example.memderadmin.domain.MemberRepository;
 import com.example.memderadmin.exception.ExceptionMessages;
 import com.example.memderadmin.exception.InvalidPasswordException;
 import org.springframework.stereotype.Service;
@@ -36,6 +36,5 @@ public class MemberRegisterService {
         if (!PasswordValidator.validate(request.password())) {
             throw new InvalidPasswordException(ExceptionMessages.INVALID_PASSWORD);
         }
-
     }
 }
