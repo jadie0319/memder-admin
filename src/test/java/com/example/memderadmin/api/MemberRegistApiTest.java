@@ -83,17 +83,15 @@ class MemberRegistApiTest extends BaseController {
 
         ExtractableResponse<Response> response =
                 RestAssured
-                        .given()
+                        .given().log().all()
                         .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .contentType(ContentType.JSON)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .body(participant)
-                        .log().all()
 
                         .when()
                         .post("/extsvc/admin/homepage/v1/member")
 
-                        .then()
-                        .log().all()
+                        .then().log().all()
 
                         .extract();
 
