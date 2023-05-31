@@ -2,6 +2,7 @@ package com.example.memderadmin.api;
 
 import com.example.memderadmin.app.MemberRegisterRequest;
 import com.example.memderadmin.app.MemberRegisterService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,6 @@ public class MemberRegisterApi {
 
     @PostMapping("/intsvc/admin/homepage/v1/member")
     public ResponseEntity<?> regist(@RequestBody @Valid MemberRegisterRequest request) {
-        return ResponseEntity.ok(memberRegisterService.regist(request));
+        return new ResponseEntity<>(memberRegisterService.regist(request), HttpStatus.CREATED);
     }
 }

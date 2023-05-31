@@ -26,7 +26,7 @@ class MemberRegisterApiTest extends BaseController {
 
         ExtractableResponse<Response> response = callMemberRegisterApi(host);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         MemberRegisterResponse result = response.body().as(MemberRegisterResponse.class);
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.name()).isEqualTo("제이슨");
@@ -43,7 +43,7 @@ class MemberRegisterApiTest extends BaseController {
 
         ExtractableResponse<Response> response = callMemberRegisterApi(participant);
 
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         MemberRegisterResponse result = response.body().as(MemberRegisterResponse.class);
         assertThat(result.id()).isEqualTo(1L);
         assertThat(result.name()).isEqualTo("제이디");
