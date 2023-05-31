@@ -74,7 +74,7 @@ class MemberRegisterApiTest extends BaseController {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
-    private ExtractableResponse<Response> callMemberRegisterApi(MemberRegisterRequest req) {
+    public static ExtractableResponse<Response> callMemberRegisterApi(MemberRegisterRequest req) {
         return RestAssured
                 .given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
