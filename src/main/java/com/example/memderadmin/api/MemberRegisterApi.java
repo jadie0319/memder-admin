@@ -18,7 +18,7 @@ public class MemberRegisterApi {
         this.memberRegisterService = memberRegisterService;
     }
 
-    @PostMapping("/extsvc/admin/homepage/v1/member")
+    @PostMapping("/intsvc/admin/homepage/v1/member")
     public ResponseEntity<?> regist(@RequestBody @Valid MemberRegisterRequest request) {
         return ResponseEntity.ok(memberRegisterService.regist(request));
     }

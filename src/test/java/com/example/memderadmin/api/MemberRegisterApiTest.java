@@ -83,7 +83,7 @@ class MemberRegisterApiTest extends BaseController {
                 .log().all()
 
                 .when()
-                .post("/extsvc/admin/homepage/v1/member")
+                .post("/intsvc/admin/homepage/v1/member")
 
                 .then()
                 .log().all()

@@ -48,7 +48,7 @@
 
 모든 기능에 유효성 검증, 테스트 코드 작성 과정이 포함되어 있다.
 
-- [ ] 회원가입 기능
+- [x] 회원가입 기능
   - POST /extsvc/admin/homepage/v1/member
 - [ ] 로그인 기능
   - POST /extsvc/admin/homepage/v1/login
