@@ -59,3 +59,8 @@
 - [ ] 내 정보 보기 기능
   - GET /extsvc/admin/homepage/v1/member/{memberId}
 
+
+
+- [ ] 추가 고려사항
+  - [ ] loginId 유효성 검사 로직 추가 필요.
+  - [ ] gender 유효성 검사를 어디서 할 것인가? Controller vs Service 

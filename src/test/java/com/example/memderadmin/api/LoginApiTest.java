@@ -19,6 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class LoginApiTest extends BaseController {
 
     @DisplayName("등록된 회원이 없으면 예외를 반환한다.")
+    @Test
     void notFoundMember() {
         LoginRequest req = LoginRequest.of("jadie", "qwer1234!");
         ExtractableResponse<Response> response = RestAssured
