@@ -20,4 +20,8 @@ public class FakeMemberRepository implements MemberRepository {
                 .filter(member -> member.getLoginId().equals(loginId))
                 .findFirst();
     }
+
+    public void clear() {
+        map.clear();
+    }
 }

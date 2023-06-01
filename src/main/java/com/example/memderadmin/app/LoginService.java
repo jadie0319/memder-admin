@@ -18,6 +18,7 @@ public class LoginService {
     public LoginResponse login(LoginRequest request) {
         Member member = memberRepository.findByLoginId(request.loginId())
                 .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER.formatted(request.loginId())));
-        return LoginResponse.of("token");
+        member.checkPassword(request.password());
+        return LoginResponse.of(null);
     }
 }

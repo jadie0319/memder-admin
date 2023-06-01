@@ -1,11 +1,14 @@
 package com.example.memderadmin.domain;
 
 import com.example.memderadmin.app.MemberRegisterRequest;
+import com.example.memderadmin.exception.ExceptionMessages;
+import com.example.memderadmin.exception.NotMatchPasswordException;
 import com.example.memderadmin.infra.GenderConverter;
 import com.example.memderadmin.infra.RoleConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -64,5 +67,12 @@ public class Member {
                 .description(request.description())
                 .regDt(LocalDateTime.now())
                 .build();
+    }
+
+    public void checkPassword(String inputPassword) {
+        if (!ObjectUtils.nullSafeEquals(this.password, inputPassword)) {
+            throw new NotMatchPasswordException(ExceptionMessages.NOT_MATCH_PASSWORD);
+        }
+
     }
 }
