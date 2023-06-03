@@ -3,12 +3,14 @@ package com.example.memderadmin.api;
 import com.example.memderadmin.app.LoginRequest;
 import com.example.memderadmin.app.LoginResponse;
 import com.example.memderadmin.app.MemberRegisterRequest;
+import com.example.memderadmin.config.JwtTokenHandler;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -17,6 +19,9 @@ import java.time.LocalDate;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class LoginApiTest extends BaseController {
+
+    @Autowired
+    private JwtTokenHandler jwtTokenHandler;
 
     @DisplayName("등록된 회원이 없으면 예외를 반환한다.")
     @Test

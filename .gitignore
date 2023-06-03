@@ -1,3 +1,4 @@
+/src/main/resources/application-secreat.yml
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

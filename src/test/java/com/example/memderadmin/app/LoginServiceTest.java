@@ -1,5 +1,6 @@
 package com.example.memderadmin.app;
 
+import com.example.memderadmin.config.StubJwtTokenHandler;
 import com.example.memderadmin.domain.FakeMemberRepository;
 import com.example.memderadmin.domain.Member;
 import com.example.memderadmin.exception.MemberNotFoundException;
@@ -16,7 +17,8 @@ class LoginServiceTest {
 
 
     private final FakeMemberRepository memberRepository = new FakeMemberRepository();
-    private final LoginService loginService = new LoginService(memberRepository);
+    private final StubJwtTokenHandler jwtTokenHandler = new StubJwtTokenHandler();
+    private final LoginService loginService = new LoginService(memberRepository, jwtTokenHandler);
 
     @BeforeEach
     void setUp() {
