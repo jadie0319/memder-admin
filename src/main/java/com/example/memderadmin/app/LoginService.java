@@ -20,7 +20,7 @@ public class LoginService {
 
     public LoginResponse login(LoginRequest request) {
         Member member = memberRepository.findByLoginId(request.loginId())
-                .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER.formatted(request.loginId())));
+                .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER_LOGIN_ID.formatted(request.loginId())));
         member.checkPassword(request.password());
 
         String token = tokenHandler.create(request.loginId());

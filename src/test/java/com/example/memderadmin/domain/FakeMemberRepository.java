@@ -1,5 +1,8 @@
 package com.example.memderadmin.domain;
 
+import com.example.memderadmin.exception.ExceptionMessages;
+import com.example.memderadmin.exception.MemberNotFoundException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -19,6 +22,11 @@ public class FakeMemberRepository implements MemberRepository {
                 .stream()
                 .filter(member -> member.getLoginId().equals(loginId))
                 .findFirst();
+    }
+
+    @Override
+    public Optional<Member> findById(Long id) {
+        return Optional.ofNullable(map.get(id));
     }
 
     public void clear() {

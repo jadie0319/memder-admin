@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface MemberRepository extends Repository<Member,Long> {
     Member save(Member member);
     Optional<Member> findByLoginId(String loginId);
+    Optional<Member> findById(Long id);
 }
