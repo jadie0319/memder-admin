@@ -5,7 +5,6 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 public record MemberUpdateRequest(
-        Long id,
         String name,
         LocalDate birthDate,
         String gender,
@@ -15,6 +14,6 @@ public record MemberUpdateRequest(
 ) {
 
     public static MemberUpdateRequest of(String name, LocalDate birthDate, String gender, String password, String email) {
-        return new MemberUpdateRequest(null, name, birthDate, gender, password, email);
+        return new MemberUpdateRequest(name, birthDate, gender, password, email);
     }
 }
