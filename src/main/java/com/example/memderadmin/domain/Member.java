@@ -75,4 +75,12 @@ public class Member {
         }
 
     }
+
+    public void update(MemberUpdateDto dto) {
+        this.name = dto.name();
+        this.birthDate = dto.birthDate();
+        this.gender = Gender.ofCode(dto.gender());
+        this.password = dto.password();
+        this.email = dto.email();
+    }
 }

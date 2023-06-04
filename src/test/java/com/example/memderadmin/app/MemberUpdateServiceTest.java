@@ -8,7 +8,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
@@ -33,11 +32,11 @@ class MemberUpdateServiceTest {
                 .isThrownBy(() -> memberUpdateService.update(memberUpdateRequest, 1L));
     }
 
-    @DisplayName("")
+    @DisplayName("회원변경성공")
     @Test
     void success() {
         MemberRegisterRequest registerRequest = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
-                "M", "Dudu", "qwer1234!@#","dudu@gmail.com", "spring");
+                "M", "Dudu", "qwer1234!@#", "dudu@gmail.com", "spring");
         Member savedMember = memberRepository.save(Member.of(registerRequest));
 
         memberUpdateService.update(memberUpdateRequest, savedMember.getId());
