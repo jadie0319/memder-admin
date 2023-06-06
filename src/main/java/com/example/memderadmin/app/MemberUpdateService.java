@@ -21,6 +21,7 @@ public class MemberUpdateService {
     public void update(MemberUpdateRequest request, Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER_ID.formatted(id)));
+
         member.update(MemberUpdateDto.of(request));
     }
 }

@@ -1,9 +1,7 @@
 package com.example.memderadmin.config;
 
 import com.example.memderadmin.app.TokenHandler;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,5 +29,10 @@ public class JwtTokenHandler implements TokenHandler {
                 .setExpiration(new Date(now.getTime() + Duration.ofHours(2L).toMillis()))
                 .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(key.getBytes()))
                 .compact();
+    }
+
+    public boolean validate(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+        return !claims.getBody().getExpiration().before(new Date());
     }
 }

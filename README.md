@@ -50,9 +50,9 @@
 
 - [x] 회원가입 기능
   - POST /extsvc/admin/homepage/v1/member
-- [ ] 로그인 기능
+- [x] 로그인 기능
   - POST /extsvc/admin/homepage/v1/login
-- [ ] 내 정보 업데이트 기능
+- [x] 내 정보 업데이트 기능
   - PUT /extsvc/admin/homepage/v1/member/{memberId} 
 - [ ] 모임 주최자로 활동하기 / 모임 참여자로 활동하기
   - PUT /extsvc/admin/homepage/v1/member/role

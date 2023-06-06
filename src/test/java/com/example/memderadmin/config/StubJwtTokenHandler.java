@@ -28,4 +28,9 @@ public class StubJwtTokenHandler implements TokenHandler {
                 .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(key.getBytes()))
                 .compact();
     }
+
+    @Override
+    public boolean validate(String token) {
+        return false;
+    }
 }
