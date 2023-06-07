@@ -22,8 +22,7 @@ public class MemberTokenArgumentResolver implements HandlerMethodArgumentResolve
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        parameter.hasParameterAnnotation(AuthenticationMember.class);
-        return false;
+        return parameter.hasParameterAnnotation(AuthenticationMember.class);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.memderadmin.app;
 
+import com.example.memderadmin.domain.LoginMember;
 import com.example.memderadmin.domain.Member;
 import com.example.memderadmin.domain.MemberRepository;
 import com.example.memderadmin.domain.MemberUpdateDto;
@@ -18,9 +19,11 @@ public class MemberUpdateService {
     }
 
     @Transactional
-    public void update(MemberUpdateRequest request, Long id) {
+    public void update(MemberUpdateRequest request, Long id, LoginMember loginMember) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER_ID.formatted(id)));
+
+        member.isMatchLoginMember(loginMember.loginId());
 
         member.update(MemberUpdateDto.of(request));
     }

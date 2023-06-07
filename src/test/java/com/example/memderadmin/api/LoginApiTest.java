@@ -27,21 +27,7 @@ public class LoginApiTest extends BaseController {
     @Test
     void notFoundMember() {
         LoginRequest req = LoginRequest.of("jadie", "qwer1234!");
-        ExtractableResponse<Response> response = RestAssured
-                .given()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(ContentType.JSON)
-
-                .body(req)
-                .log().all()
-
-                .when()
-                .post("/intsvc/admin/homepage/v1/login")
-
-                .then()
-                .log().all()
-
-                .extract();
+        ExtractableResponse<Response> response = callLoginApi(req);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
@@ -54,21 +40,7 @@ public class LoginApiTest extends BaseController {
         MemberRegisterApiTest.callMemberRegisterApi(host);
         LoginRequest req = LoginRequest.of(host.loginId(), host.password());
 
-        ExtractableResponse<Response> response = RestAssured
-                .given()
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .contentType(ContentType.JSON)
-
-                .body(req)
-                .log().all()
-
-                .when()
-                .post("/intsvc/admin/homepage/v1/login")
-
-                .then()
-                .log().all()
-
-                .extract();
+        ExtractableResponse<Response> response = callLoginApi(req);
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
         LoginResponse result = response.body().as(LoginResponse.class);
@@ -83,6 +55,12 @@ public class LoginApiTest extends BaseController {
         MemberRegisterApiTest.callMemberRegisterApi(host);
         LoginRequest req = LoginRequest.of(host.loginId(), "1234abcde!");
 
+        ExtractableResponse<Response> response = callLoginApi(req);
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    public static ExtractableResponse<Response> callLoginApi(LoginRequest req) {
         ExtractableResponse<Response> response = RestAssured
                 .given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -98,8 +76,7 @@ public class LoginApiTest extends BaseController {
                 .log().all()
 
                 .extract();
-
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        return response;
     }
 
 }

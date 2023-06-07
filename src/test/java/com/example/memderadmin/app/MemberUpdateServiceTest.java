@@ -1,6 +1,7 @@
 package com.example.memderadmin.app;
 
 import com.example.memderadmin.domain.FakeMemberRepository;
+import com.example.memderadmin.domain.LoginMember;
 import com.example.memderadmin.domain.Member;
 import com.example.memderadmin.exception.MemberNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ class MemberUpdateServiceTest {
     @Test
     void notFoundMember() {
         assertThatExceptionOfType(MemberNotFoundException.class)
-                .isThrownBy(() -> memberUpdateService.update(memberUpdateRequest, 1L));
+                .isThrownBy(() -> memberUpdateService.update(memberUpdateRequest, 1L, null));
     }
 
     @DisplayName("회원변경성공")
@@ -39,7 +40,7 @@ class MemberUpdateServiceTest {
                 "M", "Dudu", "qwer1234!@#", "dudu@gmail.com", "spring");
         Member savedMember = memberRepository.save(Member.of(registerRequest));
 
-        memberUpdateService.update(memberUpdateRequest, savedMember.getId());
+        memberUpdateService.update(memberUpdateRequest, savedMember.getId(), new LoginMember("Dudu"));
 
         Member updatedMember = memberRepository.findById(savedMember.getId())
                 .get();

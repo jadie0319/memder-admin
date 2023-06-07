@@ -2,6 +2,7 @@ package com.example.memderadmin.api;
 
 import com.example.memderadmin.app.MemberUpdateRequest;
 import com.example.memderadmin.app.MemberUpdateService;
+import com.example.memderadmin.config.AuthenticationMember;
 import com.example.memderadmin.config.MemberToken;
 import com.example.memderadmin.domain.LoginMember;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +26,9 @@ public class MemberUpdateApi {
     public ResponseEntity<?> update(
             @RequestBody @Valid MemberUpdateRequest request,
             @PathVariable("memberId") Long id,
-            @RequestBody LoginMember loginMember
+            @AuthenticationMember LoginMember loginMember
     ) {
-        memberUpdateService.update(request,id);
+        memberUpdateService.update(request,id,loginMember);
         return ResponseEntity.noContent().build();
     }
 }

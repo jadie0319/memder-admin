@@ -2,6 +2,7 @@ package com.example.memderadmin.domain;
 
 import com.example.memderadmin.app.MemberRegisterRequest;
 import com.example.memderadmin.exception.ExceptionMessages;
+import com.example.memderadmin.exception.NotAuthorizedMemberException;
 import com.example.memderadmin.exception.NotMatchPasswordException;
 import com.example.memderadmin.infra.GenderConverter;
 import com.example.memderadmin.infra.RoleConverter;
@@ -13,6 +14,8 @@ import org.springframework.util.ObjectUtils;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static com.example.memderadmin.exception.ExceptionMessages.NOT_AUTHORIZE_MEMBER;
 
 @Getter
 @Builder
@@ -73,7 +76,6 @@ public class Member {
         if (!ObjectUtils.nullSafeEquals(this.password, inputPassword)) {
             throw new NotMatchPasswordException(ExceptionMessages.NOT_MATCH_PASSWORD);
         }
-
     }
 
     public void update(MemberUpdateDto dto) {
@@ -82,5 +84,11 @@ public class Member {
         this.gender = Gender.ofCode(dto.gender());
         this.password = dto.password();
         this.email = dto.email();
+    }
+
+    public void isMatchLoginMember(String loginId) {
+        if (!this.loginId.equals(loginId)) {
+            throw new NotAuthorizedMemberException(NOT_AUTHORIZE_MEMBER.formatted(loginId));
+        }
     }
 }
