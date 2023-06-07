@@ -1,11 +1,12 @@
 package com.example.memderadmin.app;
 
-import com.example.memderadmin.config.StubJwtTokenHandler;
+import com.example.memderadmin.config.JwtTokenHandler;
 import com.example.memderadmin.domain.FakeMemberRepository;
 import com.example.memderadmin.domain.Member;
 import com.example.memderadmin.exception.MemberNotFoundException;
 import com.example.memderadmin.exception.NotMatchPasswordException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ class LoginServiceTest {
 
 
     private final FakeMemberRepository memberRepository = new FakeMemberRepository();
-    private final StubJwtTokenHandler jwtTokenHandler = new StubJwtTokenHandler();
+    private final TokenHandler jwtTokenHandler = new JwtTokenHandler("testkey");
     private final LoginService loginService = new LoginService(memberRepository, jwtTokenHandler);
 
     @BeforeEach
@@ -25,6 +26,7 @@ class LoginServiceTest {
         memberRepository.clear();
     }
 
+    @DisplayName("회원이 등록되어 있지 않으면 예외를 반환한다.")
     @Test
     void notFoundMember() {
         LoginRequest req = LoginRequest.of("TomTom", "qwer1234!");
@@ -33,6 +35,7 @@ class LoginServiceTest {
                 .isThrownBy(() -> loginService.login(req));
     }
 
+    @DisplayName("유효하지 않은 비밀번호를 입력하면 예외를 반환한다.")
     @Test
     void invalidPassword() {
         MemberRegisterRequest host = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
@@ -44,6 +47,7 @@ class LoginServiceTest {
                 .isThrownBy(() -> loginService.login(req));
     }
 
+    @DisplayName("로그인 성공하면 토큰을 반환한다.")
     @Test
     void suceess() {
         MemberRegisterRequest host = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),

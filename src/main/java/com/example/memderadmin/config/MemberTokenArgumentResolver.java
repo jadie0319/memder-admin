@@ -8,6 +8,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Enumeration;
 
 
@@ -29,7 +30,7 @@ public class MemberTokenArgumentResolver implements HandlerMethodArgumentResolve
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest httpServletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
         String tokenValue = getTokenValue(httpServletRequest);
-        return authService.authentication(tokenValue);
+        return authService.authentication(tokenValue, LocalDateTime.now());
     }
 
     private static String getTokenValue(HttpServletRequest httpServletRequest) {

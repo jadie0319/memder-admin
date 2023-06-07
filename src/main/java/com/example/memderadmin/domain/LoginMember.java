@@ -1,4 +1,6 @@
 package com.example.memderadmin.domain;
 
-public record LoginMember() {
+public record LoginMember(
+        String loginId
+) {
 }

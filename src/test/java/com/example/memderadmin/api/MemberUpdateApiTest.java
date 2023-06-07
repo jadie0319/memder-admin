@@ -30,7 +30,7 @@ public class MemberUpdateApiTest extends BaseController {
                 .given()
                 .accept(MediaType.APPLICATION_JSON_VALUE)
                 .contentType(ContentType.JSON)
-                .header("",token)
+                //.header("",token)
 
                 .body(req)
                 .pathParam("memberId", memberResponse.id())

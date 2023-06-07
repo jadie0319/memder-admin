@@ -5,9 +5,10 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
-import java.util.Base64;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class JwtTokenHandler implements TokenHandler {
@@ -19,20 +20,22 @@ public class JwtTokenHandler implements TokenHandler {
     }
 
     public String create(String loginId) {
-        Date now = new Date();
-
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .claim("loginId", loginId)
+                .setClaims(Jwts.claims().setSubject(loginId))
                 .setIssuer("member-admin")
-                .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + Duration.ofHours(2L).toMillis()))
-                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(key.getBytes()))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + TimeUnit.HOURS.toMillis(1L)))
+                .signWith(SignatureAlgorithm.HS256, key)
                 .compact();
     }
 
-    public boolean validate(String token) {
+    public boolean validate(String token, LocalDateTime now) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
-        return !claims.getBody().getExpiration().before(new Date());
+        return !claims.getBody().getExpiration().before(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
+    }
+
+    public String getPayload(String token) {
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     }
 }
