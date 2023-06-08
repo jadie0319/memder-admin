@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 class MemberQueryServiceTest {
@@ -29,10 +30,23 @@ class MemberQueryServiceTest {
     void notMatchLoginId() {
         MemberRegisterRequest registerRequest = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
                 "M", "Dudu", "qwer1234!@#", "dudu@gmail.com", "spring");
-        Member savedMember = memberRepository.save(Member.of(registerRequest));
+        memberRepository.save(Member.of(registerRequest));
 
         assertThatExceptionOfType(NotAuthorizedMemberException.class)
                 .isThrownBy(() -> memberQueryService.getMember(1L, new LoginMember("Jadie")));
+    }
+
+    @DisplayName("회원 조회 성공")
+    @Test
+    void success() {
+        MemberRegisterRequest registerRequest = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
+                "M", "Dudu", "qwer1234!@#", "dudu@gmail.com", "spring");
+        Member savedMember = memberRepository.save(Member.of(registerRequest));
+
+        MemberQueryResponse result = memberQueryService.getMember(1L, new LoginMember("Dudu"));
+
+        assertThat(result.name()).isEqualTo(savedMember.getName());
+        assertThat(result.loginId()).isEqualTo(savedMember.getLoginId());
     }
 
 }

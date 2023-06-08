@@ -20,7 +20,6 @@ public class MemberQueryService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER_ID.formatted(id)));
         member.isMatchLoginMember(loginMember.loginId());
-
-        return null;
+        return MemberQueryResponse.of(member);
     }
 }
