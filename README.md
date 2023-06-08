@@ -32,9 +32,12 @@
 
 ### 모임 주최자/참여자로 활동하기
 
-- 주최자 였던 사람이 참여자가 될 수 있고, 참여자 였던 사람이 주최자가 될 수 있음
-- 추가 정보를 받아서 주최자 혹은 참여자로 활동할 수 있도록 지원
+- 주최자 였던 사람이 참여자로도 활동할 수 있고, 참여자 였던 사람이 주최자로 활동할 수 있음
+  - 주최자는 추가 정보를 입력받을 수 있다. 역할은 주죄자를 유지한다.
+  - 참여자는 추자 정보를 입력받아 역할을 주최자로 변경할 수 있다.
 - 인증토큰 필요
+
+- 
 
 ### 내 정보 보기
 
@@ -49,18 +52,27 @@
 모든 기능에 유효성 검증, 테스트 코드 작성 과정이 포함되어 있다.
 
 - [x] 회원가입 기능
-  - POST /extsvc/admin/homepage/v1/member
+  - POST /intsvc/admin/homepage/v1/member
 - [x] 로그인 기능
-  - POST /extsvc/admin/homepage/v1/login
+  - POST /intsvc/admin/homepage/v1/login
 - [x] 내 정보 업데이트 기능
-  - PUT /extsvc/admin/homepage/v1/member/{memberId} 
+  - PUT /intsvc/admin/homepage/v1/member/{memberId} 
 - [ ] 모임 주최자로 활동하기 / 모임 참여자로 활동하기
-  - PUT /extsvc/admin/homepage/v1/member/role
+  - PUT /intsvc/admin/homepage/v1/member/{memberId}/role
 - [x] 내 정보 보기 기능
-  - GET /extsvc/admin/homepage/v1/member/{memberId}
+  - GET /intsvc/admin/homepage/v1/member/{memberId}
 
 
 
-- [ ] 추가 고려사항
-  - [ ] loginId 유효성 검사 로직 추가 필요.
-  - [ ] gender 유효성 검사를 어디서 할 것인가? Controller vs Service 
+## 개선사항
+- 모임 주최자로도 활동하기 / 모임 참여자로도 활동하기를 구현하다보니 구조 변경의 필요성을 느낌
+  - 주최자와 참여자의 역할을 동시에 하는 사람은 Role 을 어떻게 해야 하는가
+  - 일단은 해석한 대로 구현함
+    - 주최자는 추가 정보를 입력받을 수 있다. 역할은 주죄자를 유지한다.
+    - 참여자는 추자 정보를 입력받아 역할을 주최자로 변경할 수 있다.
+- 유효성 검증을 어떻게 작성할 것인가
+  - spring validation 을 사용할 것인지 값 검증 로직을 직접 구현할 것인지
+- dto -> entity, entity -> dto 변환 로직을 service 에 위치할 것인지 dto에 위치할 것인지 고민
+  - service 클래스에 위치하는게 좋아보인다
+  - entity 에 위치하면 패키지 의존성 방향이 양방향이 되기 때문에 entity 에 위치하는 것은 안좋아 보임
+  - dto 에 위치시키는 것도 굳이 dto 에 변환로직을 추가해야 하나 싶다 
