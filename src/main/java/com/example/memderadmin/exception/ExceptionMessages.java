@@ -8,4 +8,5 @@ public class ExceptionMessages {
     public static final String NOT_MATCH_PASSWORD = "비밀먼호가 일치하지 않습니다.";
     public static final String FAIL_AUTHENTICATION = "인증이 실패했습니다.";
     public static final String NOT_AUTHORIZE_MEMBER = "인증이 실패했습니다. %s";
+    public static final String EMPTY_TOKEN = "토큰이 없습니다.";
 }

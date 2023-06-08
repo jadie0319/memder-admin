@@ -8,11 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
 @Configuration
-public class AuthenticationConfig implements WebMvcConfigurer {
+public class AuthenticationWebConfig implements WebMvcConfigurer {
 
     private final AuthService authService;
 
-    public AuthenticationConfig(AuthService authService) {
+    public AuthenticationWebConfig(AuthService authService) {
         this.authService = authService;
     }
 

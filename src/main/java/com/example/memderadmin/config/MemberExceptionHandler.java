@@ -1,5 +1,6 @@
 package com.example.memderadmin.config;
 
+import com.example.memderadmin.exception.EmptyTokenException;
 import com.example.memderadmin.exception.InvalidPasswordException;
 import com.example.memderadmin.exception.MemberNotFoundException;
 import com.example.memderadmin.exception.NotMatchPasswordException;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class MemberExceptionHandler {
 
-    @ExceptionHandler({InvalidPasswordException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler({InvalidPasswordException.class, MethodArgumentNotValidException.class, EmptyTokenException.class})
     public ResponseEntity<?> invalidRequest(Exception e) {
         e.printStackTrace();
         return ResponseEntity.badRequest().body(e.getMessage());
