@@ -3,8 +3,8 @@ package com.example.memderadmin.app;
 import com.example.memderadmin.config.JwtTokenHandler;
 import com.example.memderadmin.domain.FakeMemberRepository;
 import com.example.memderadmin.domain.Member;
+import com.example.memderadmin.exception.AuthenticationMemberException;
 import com.example.memderadmin.exception.MemberNotFoundException;
-import com.example.memderadmin.exception.NotMatchPasswordException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class LoginServiceTest {
         memberRepository.save(Member.of(host));
         LoginRequest req = LoginRequest.of("Dudu", "qwer1234!");
 
-        assertThatExceptionOfType(NotMatchPasswordException.class)
+        assertThatExceptionOfType(AuthenticationMemberException.class)
                 .isThrownBy(() -> loginService.login(req));
     }
 

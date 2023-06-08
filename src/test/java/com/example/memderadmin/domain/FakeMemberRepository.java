@@ -9,10 +9,12 @@ import java.util.Optional;
 
 public class FakeMemberRepository implements MemberRepository {
     private Map<Long, Member> map = new HashMap<>();
+    private Long id = 1L;
 
     @Override
     public Member save(Member member) {
-        map.put(member.getId(), member);
+        member.setId(id);
+        map.put(id++, member);
         return member;
     }
 
@@ -31,5 +33,6 @@ public class FakeMemberRepository implements MemberRepository {
 
     public void clear() {
         map.clear();
+        id = 1L;
     }
 }

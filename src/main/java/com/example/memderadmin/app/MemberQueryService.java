@@ -19,6 +19,7 @@ public class MemberQueryService {
     public MemberQueryResponse getMember(Long id, LoginMember loginMember) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER_ID.formatted(id)));
+        member.isMatchLoginMember(loginMember.loginId());
 
         return null;
     }

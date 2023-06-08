@@ -1,9 +1,9 @@
 package com.example.memderadmin.domain;
 
 import com.example.memderadmin.app.MemberRegisterRequest;
+import com.example.memderadmin.exception.AuthenticationMemberException;
 import com.example.memderadmin.exception.ExceptionMessages;
 import com.example.memderadmin.exception.NotAuthorizedMemberException;
-import com.example.memderadmin.exception.NotMatchPasswordException;
 import com.example.memderadmin.infra.GenderConverter;
 import com.example.memderadmin.infra.RoleConverter;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.example.memderadmin.exception.ExceptionMessages.NOT_AUTHORIZE_MEMBER;
+import static com.example.memderadmin.exception.ExceptionMessages.NOT_MATCH_LOGIN_ID;
 
 @Getter
 @Builder
@@ -74,7 +74,7 @@ public class Member {
 
     public void checkPassword(String inputPassword) {
         if (!ObjectUtils.nullSafeEquals(this.password, inputPassword)) {
-            throw new NotMatchPasswordException(ExceptionMessages.NOT_MATCH_PASSWORD);
+            throw new AuthenticationMemberException(ExceptionMessages.NOT_MATCH_PASSWORD);
         }
     }
 
@@ -88,7 +88,11 @@ public class Member {
 
     public void isMatchLoginMember(String loginId) {
         if (!this.loginId.equals(loginId)) {
-            throw new NotAuthorizedMemberException(NOT_AUTHORIZE_MEMBER.formatted(loginId));
+            throw new NotAuthorizedMemberException(NOT_MATCH_LOGIN_ID.formatted(loginId));
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -4,6 +4,7 @@ import com.example.memderadmin.domain.FakeMemberRepository;
 import com.example.memderadmin.domain.LoginMember;
 import com.example.memderadmin.domain.Member;
 import com.example.memderadmin.exception.MemberNotFoundException;
+import com.example.memderadmin.exception.NotAuthorizedMemberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,17 @@ class MemberUpdateServiceTest {
     void notFoundMember() {
         assertThatExceptionOfType(MemberNotFoundException.class)
                 .isThrownBy(() -> memberUpdateService.update(memberUpdateRequest, 1L, null));
+    }
+
+    @DisplayName("로그인 아이디가 다르면 예외를 반환한다.")
+    @Test
+    void notMatchLoginId() {
+        MemberRegisterRequest registerRequest = MemberRegisterRequest.host("제이슨", LocalDate.of(2023, 5, 29),
+                "M", "Dudu", "qwer1234!@#", "dudu@gmail.com", "spring");
+        Member savedMember = memberRepository.save(Member.of(registerRequest));
+
+        assertThatExceptionOfType(NotAuthorizedMemberException.class)
+                .isThrownBy(() -> memberUpdateService.update(memberUpdateRequest, 1L, new LoginMember("Jaide")));
     }
 
     @DisplayName("회원변경성공")

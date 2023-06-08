@@ -1,7 +1,7 @@
 package com.example.memderadmin.config;
 
 import com.example.memderadmin.app.AuthService;
-import com.example.memderadmin.exception.EmptyTokenException;
+import com.example.memderadmin.exception.AuthenticationMemberException;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -34,7 +34,7 @@ public class MemberTokenArgumentResolver implements HandlerMethodArgumentResolve
         HttpServletRequest httpServletRequest = webRequest.getNativeRequest(HttpServletRequest.class);
         String tokenValue = getTokenValue(httpServletRequest);
         if (!StringUtils.hasText(tokenValue)) {
-            throw new EmptyTokenException(EMPTY_TOKEN);
+            throw new AuthenticationMemberException(EMPTY_TOKEN);
         }
         return authService.authentication(tokenValue, LocalDateTime.now());
     }

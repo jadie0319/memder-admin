@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static com.example.memderadmin.exception.ExceptionMessages.FAIL_AUTHENTICATION;
+import static com.example.memderadmin.exception.ExceptionMessages.END_TOKEN_EXPIRATION;
 
 @Service
 public class AuthService {
@@ -22,7 +22,7 @@ public class AuthService {
 
     public LoginMember authentication(String token, LocalDateTime now) {
         if (!tokenHandler.validate(token, now)) {
-            throw new AuthenticationMemberException(FAIL_AUTHENTICATION);
+            throw new AuthenticationMemberException(END_TOKEN_EXPIRATION);
         }
         String loginId = tokenHandler.getPayload(token);
         return new LoginMember(loginId);
