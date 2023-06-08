@@ -56,7 +56,7 @@
   - PUT /extsvc/admin/homepage/v1/member/{memberId} 
 - [ ] 모임 주최자로 활동하기 / 모임 참여자로 활동하기
   - PUT /extsvc/admin/homepage/v1/member/role
-- [ ] 내 정보 보기 기능
+- [x] 내 정보 보기 기능
   - GET /extsvc/admin/homepage/v1/member/{memberId}
 
 
