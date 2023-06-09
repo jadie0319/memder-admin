@@ -1,5 +1,7 @@
 package com.example.memderadmin.app;
 
+import lombok.Builder;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;

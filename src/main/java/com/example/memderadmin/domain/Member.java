@@ -79,11 +79,21 @@ public class Member {
     }
 
     public void update(MemberUpdateDto dto) {
-        this.name = dto.name();
-        this.birthDate = dto.birthDate();
-        this.gender = Gender.ofCode(dto.gender());
-        this.password = dto.password();
-        this.email = dto.email();
+        if (!ObjectUtils.isEmpty(dto.name()) && !ObjectUtils.nullSafeEquals(this.name, dto.name())) {
+            this.name = dto.name();
+        }
+        if (!ObjectUtils.isEmpty(dto.birthDate()) && !ObjectUtils.nullSafeEquals(this.birthDate, dto.birthDate())) {
+            this.birthDate = dto.birthDate();
+        }
+        if (!ObjectUtils.isEmpty(dto.gender()) && !ObjectUtils.nullSafeEquals(this.gender, dto.gender())) {
+            this.gender = Gender.ofCode(dto.gender());
+        }
+        if (!ObjectUtils.isEmpty(dto.password()) && !ObjectUtils.nullSafeEquals(this.password, dto.password())) {
+            this.password = dto.password();
+        }
+        if (!ObjectUtils.isEmpty(dto.email()) && !ObjectUtils.nullSafeEquals(this.email, dto.email())) {
+            this.email = dto.email();
+        }
     }
 
     public void isMatchLoginMember(String loginId) {
@@ -94,5 +104,20 @@ public class Member {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void updateRole(MemberRoleUpdateDto dto) {
+        if (Role.PARTICIPANT.equals(this.role) && Role.HOST.equals(dto.role())) {
+            // 현재는 참여자인데 주최자로 변경할 경우
+            this.role = dto.role();
+            this.group = dto.group();
+        } else if (Role.HOST.equals(this.role)) {
+            // 현재는 주최자인데 참여자로 변경할 경우
+            this.role = dto.role();
+            this.group = null;
+            this.limitIngredients = dto.limitIngredients();
+            this.description = dto.description();
+        }
+
     }
 }

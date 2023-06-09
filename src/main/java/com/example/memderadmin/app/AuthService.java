@@ -25,6 +25,8 @@ public class AuthService {
             throw new AuthenticationMemberException(END_TOKEN_EXPIRATION);
         }
         String loginId = tokenHandler.getPayload(token);
+//        Member member = memberRepository.findByLoginId(loginId)
+//                .orElseThrow(() -> new MemberNotFoundException(ExceptionMessages.NOT_FOUND_MEMBER_LOGIN_ID.formatted(loginId)));
         return new LoginMember(loginId);
     }
 }
