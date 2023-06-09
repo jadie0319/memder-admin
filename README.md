@@ -1,6 +1,18 @@
 # 모임 서비스 만들기
 
-주최자가 모임 참여자들의 음식 기호를 고려하여 모임을 이끌어 갈 수 있게 도와주는 서비스 
+주최자가 모임 참여자들의 음식 기호를 고려하여 모임을 이끌어 갈 수 있게 도와주는 서비스
+
+## 사용기술
+
+- Java 17
+- Spring Boot 2.7.12
+- Spring Data Jpa
+- H2
+
+## 실행
+
+> mvn package  
+> java -jar -Dspring.profiles.active=local moim.jar
 
 ## 기능 목록
 
@@ -19,16 +31,19 @@
   - 회원번호, 이름, 생년월일, 성별, 아이디, 비밀번호, 이메일, 취식을 제한하는 재료, 자기소개
 - 회원가입시 입력한 비밀번호가 정책에 부합하는지 확인
 
+
 ### 로그인
 
 - 아이디와 비밀번호를 이용해 로그인
 - 다른 API 들을 호출 할 수 있는 인증토큰 발급
+
 
 ### 내 정보 업데이트
 
 - 회원가입시 제출한 정보 수정
 - 비밀번호 변경시 비밀번호가 정책에 부합하는지 확인
 - 인증토큰 필요
+
 
 ### 모임 주최자/참여자로 활동하기
 
@@ -37,7 +52,6 @@
   - 참여자는 추자 정보를 입력받아 역할을 주최자로 변경할 수 있다.
 - 인증토큰 필요
 
-- 
 
 ### 내 정보 보기
 
@@ -57,7 +71,7 @@
   - POST /intsvc/admin/homepage/v1/login
 - [x] 내 정보 업데이트 기능
   - PUT /intsvc/admin/homepage/v1/member/{memberId} 
-- [ ] 모임 주최자로 활동하기 / 모임 참여자로 활동하기
+- [x] 모임 주최자로 활동하기 / 모임 참여자로 활동하기
   - PUT /intsvc/admin/homepage/v1/member/{memberId}/role
 - [x] 내 정보 보기 기능
   - GET /intsvc/admin/homepage/v1/member/{memberId}
